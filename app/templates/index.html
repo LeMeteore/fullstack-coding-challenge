@@ -1,0 +1,15 @@
+<html>
+<head>
+  <title>{{ title }}</title>
+</head>
+<body>
+  <h2>Top News</h2>
+  {% for story in stories %}
+    <div>
+      Title: {{ story.title }}<br>
+      By: {{ story.by }}
+      <hr>
+    </div>
+  {% endfor %}
+</body>
+</html>
