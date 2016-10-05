@@ -4,12 +4,14 @@
 </head>
 <body>
   <h2>Top News</h2>
-  {% for story in stories %}
-    <div>
-      Title: {{ story.title }}<br>
-      By: {{ story.by }}
-      <hr>
-    </div>
-  {% endfor %}
+  <ul>
+    {% for story in stories %}
+      <li>
+        {{ story.rank }}:
+        Title: {{ story.title }} |
+        By: {{ story.by }}
+      </li>
+    {% endfor %}
+  </ul>
 </body>
 </html>

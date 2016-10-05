@@ -4,7 +4,6 @@ from app import app
 from app.jobs import fetch_stories_job
 
 @app.route('/')
-#@app.route(url_for('index'))
 def index():
   
   stories = fetch_stories_job.FetchStoriesJob().run()
