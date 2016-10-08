@@ -1,9 +1,9 @@
-from app import celery, models
-from app.tasks import fetch_stories
+from app import celery, models, helpers
+from app.tasks import other_tasks
 
 @celery.task
 def update_stories():
-  new_stories_rank = fetch_stories.get_top_stories_ids()
+  new_stories_rank = helpers.get_top_stories_ids()
 
   already_present = set()
   for old_story in models.Story.objects:
@@ -15,16 +15,7 @@ def update_stories():
       old_story.delete()
 
   for story_id, rank in new_stories_rank.iteritems():
-
     if story_id not in already_present:
-      story = fetch_stories.get_story(str(story_id))
-      s = models.Story(
-        sid=story['id'],
-        rank=rank,
-        title=story['title'],
-        by=story['by']  
-      )
-      s.save()
-
+      other_tasks.get_story.delay(str(story_id), rank)
 
   

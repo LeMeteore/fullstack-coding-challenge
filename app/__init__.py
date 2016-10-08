@@ -7,9 +7,10 @@ import config
 
 app = Flask(__name__)
 app.config.from_object('config')
-db = MongoEngine(app)
-celery = Celery(app.name, broker=config.CELERY_BROKER_URL)
 
+celery = Celery(app.name, broker=config.CELERY_BROKER_URL)
 celery.conf.update(app.config)
+
+db = MongoEngine(app)
 
 from app import views
