@@ -1,0 +1,19 @@
+<html>
+<head>
+  <title>{{ title }}</title>
+</head>
+<body>
+  <h2>Top News</h2>
+  <ul>
+    {% for story in stories %}
+      <li>
+        {{ story.rank + 1}}:
+        Title: {{ story.title }} |
+        {% if story.pt_title %}
+          pt title: {{ story.pt_title }}
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+</body>
+</html>
