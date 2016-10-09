@@ -92,3 +92,6 @@ ENV/
 
 # db files
 *.db
+
+# redis db
+*.rdb

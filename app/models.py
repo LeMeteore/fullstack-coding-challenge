@@ -14,15 +14,18 @@ class Comment(db.EmbeddedDocument):
 class Story(db.Document):
   sid = db.IntField(unique=True, required=True)
   by = db.StringField(max_length=120)
-  text = db.StringField(max_length=10000)
-  url = db.URLField(max_length=120)
   title = db.StringField(max_length=120, required=True)
+  pt_title = db.StringField(max_length=120)
+  fr_title = db.StringField(max_length=120)
   descendents = db.IntField()
   rank = db.IntField(required=True)
+  active = db.BooleanField(required=True)
+  uid = db.StringField(max_length=60)
+
   #comments = db.ListField(db.EmbeddedDocumentField(Comment))
 
   meta = {
-      'indexes': ['sid']
+      'indexes': ['sid', 'active'],
   }
 
 

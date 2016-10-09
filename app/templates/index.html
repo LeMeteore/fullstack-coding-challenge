@@ -7,9 +7,11 @@
   <ul>
     {% for story in stories %}
       <li>
-        {{ story.rank }}:
+        {{ story.rank + 1}}:
         Title: {{ story.title }} |
-        By: {{ story.by }}
+        {% if story.pt_title %}
+          pt title: {{ story.pt_title }}
+        {% endif %}
       </li>
     {% endfor %}
   </ul>
