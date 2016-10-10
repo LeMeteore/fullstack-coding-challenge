@@ -24,27 +24,16 @@ def get_hn_story(sid):
 
   return story
 
-def translate_story_request(sid, title):
-
+def get_unbabel_api_headers():
   key = 'ApiKey {}:{}'.format(config.UNBABEL_USERNAME, config.UNBABEL_KEY)
-  headers = {'Authorization': key}
-  url = constants.UNBABEL_URL + constants.TRANSLATE_ENDPOINT
+  return {'Authorization': key}
 
-  payload = {
-    "text": title,
-    "target_language": constants.PORTUGUESE,
-    "source_language": constants.ENGLISH,
-    "text_format": "text",
-    "uid": sid_to_uid(sid),
-    "callback_url": "http://e5d89c49.ngrok.io/unbabel_endpoint"
-  }
+def construct_uid(sid, language):
+  to_epoch = int(time.time())
+  return '{}:{}:{}'.format(language, sid, to_epoch)
 
-  r = requests.post(url, json=payload, headers=headers)
-  
-def sid_to_uid(sid):
-  sec_to_epoch = int(time.time())
-  return '{}:{}'.format(sid, sec_to_epoch)
+def get_sid_from_uid(uid):
+  return int(uid.split(':')[1])
 
-def uid_to_sid(uid):
-  return int(uid.split(':')[0])
-
+def get_language_from_uid(uid):
+  return uid.split(':')[0]

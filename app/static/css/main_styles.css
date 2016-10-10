@@ -1,0 +1,7 @@
+.decimal-style {
+  list-style-type: decimal; 
+}
+
+.no-style {
+  list-style-type: none;
+}

@@ -1,0 +1,64 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>{{ title }}</title>
+  <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../static/css/main_styles.css"></link>
+</head>
+<body>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Multiling HN</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li><a href="/">Top</a></li>
+          <li class="active"><a href="/status">Status</a></li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+  <div class="containter">
+    <h2>New</h2>
+    <ul id="new" class="no-style">
+      {% for request in new %}
+        <li>
+          <span style="font-weight: bold;">Story title:</span> {{ request.text }}<br>
+          <span style="font-weight: bold;">Target language:</span> {{ request.target_language }}<br>
+          <hr>
+        </li>
+      {% endfor %}
+    </ul>
+    <h2>Translating</h2>
+    <ul id="translating" class="no-style">
+      {% for request in translating %}
+        <li>
+          <span style="font-weight: bold;">Story title:</span> {{ request.text }}<br>
+          <span style="font-weight: bold;">Target language:</span> {{ request.target_language }}<br>
+          <hr>
+        </li>
+      {% endfor %}
+    </ul>
+    <h2>Completed</h2>
+    <ul id="completed" class="no-style">
+      {% for request in completed %}
+        <li>
+          <span style="font-weight: bold;">Story title:</span> {{ request.text }}<br>
+          <span style="font-weight: bold;">Target language:</span> {{ request.target_language }}<br>
+          <span style="font-weight: bold;">Result:</span> {{ request.result }}
+          <hr>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+  <script src="../static/js/jquery-3.1.1.slim.min.js"></script>
+  <script src="../static/js/bootstrap.min.js"></script>
+</body>
+</html>
