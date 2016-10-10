@@ -1,8 +1,8 @@
 from app import constants
 import requests, config, time
 
-def make_hn_api_url(endpoint, sid=""):
-  return constants.HN_URL+endpoint+sid+constants.HN_JSON_FORMAT
+def make_hn_api_url(endpoint, item_id=""):
+  return constants.HN_URL+endpoint+item_id+constants.HN_JSON_FORMAT
 
 def get_top_stories_ids(n=10):
   url = make_hn_api_url(constants.HN_TOP_STORIES_ENDPOINT)
@@ -17,34 +17,23 @@ def get_top_stories_ids(n=10):
 
 def get_hn_story(sid):
   ''' sid: str '''
-  url = make_hn_api_url(constants.HN_ITEM_ENDPOINT, sid=sid)
+  url = make_hn_api_url(constants.HN_ITEM_ENDPOINT, item_id=sid)
   r = requests.get(url)
   story = r.json()
   #todo: check status and exceptions
 
   return story
 
-def translate_story_request(sid, title):
-
+def get_unbabel_api_headers():
   key = 'ApiKey {}:{}'.format(config.UNBABEL_USERNAME, config.UNBABEL_KEY)
-  headers = {'Authorization': key}
-  url = constants.UNBABEL_URL + constants.TRANSLATE_ENDPOINT
+  return {'Authorization': key}
 
-  payload = {
-    "text": title,
-    "target_language": constants.PORTUGUESE,
-    "source_language": constants.ENGLISH,
-    "text_format": "text",
-    "uid": sid_to_uid(sid),
-    "callback_url": "http://e5d89c49.ngrok.io/unbabel_endpoint"
-  }
+def construct_uid(sid, language):
+  to_epoch = int(time.time())
+  return '{}:{}:{}'.format(language, sid, to_epoch)
 
-  r = requests.post(url, json=payload, headers=headers)
-  
-def sid_to_uid(sid):
-  sec_to_epoch = int(time.time())
-  return '{}:{}'.format(sid, sec_to_epoch)
+def get_sid_from_uid(uid):
+  return int(uid.split(':')[1])
 
-def uid_to_sid(uid):
-  return int(uid.split(':')[0])
-
+def get_language_from_uid(uid):
+  return uid.split(':')[0]
