@@ -1,8 +1,8 @@
 from app import constants
 import requests, config, time
 
-def make_hn_api_url(endpoint, sid=""):
-  return constants.HN_URL+endpoint+sid+constants.HN_JSON_FORMAT
+def make_hn_api_url(endpoint, item_id=""):
+  return constants.HN_URL+endpoint+item_id+constants.HN_JSON_FORMAT
 
 def get_top_stories_ids(n=10):
   url = make_hn_api_url(constants.HN_TOP_STORIES_ENDPOINT)
@@ -17,7 +17,7 @@ def get_top_stories_ids(n=10):
 
 def get_hn_story(sid):
   ''' sid: str '''
-  url = make_hn_api_url(constants.HN_ITEM_ENDPOINT, sid=sid)
+  url = make_hn_api_url(constants.HN_ITEM_ENDPOINT, item_id=sid)
   r = requests.get(url)
   story = r.json()
   #todo: check status and exceptions

@@ -39,7 +39,19 @@
           {% if story.fr_title %}
             <span style="font-weight: bold;">French: </span>{{ story.fr_title }}<br>
           {% endif %}
-          <span style="font-weight: bold;">By: </span>{{ story.by }}
+          <span style="font-weight: bold;">By: </span>{{ story.by }}<br>
+          <div class="comments">
+            <a href="">Comments </a><span><small>({{story.descendents}})</small></span>
+            <ul style="display: none;">
+              {% for comment in story.comments %}
+                <li>
+                  <span style="font-weight: bold;">By: </span>
+                  <p>{{ comment.text }}</p>
+                  <hr>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
           <hr>
         </li>
       {% endfor %}
@@ -47,5 +59,15 @@
   </div>
   <script src="../static/js/jquery-3.1.1.slim.min.js"></script>
   <script src="../static/js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+    comments = $(".comments")
+
+    comments.click(function(event) {
+      event.preventDefault()
+      currentTarget = $(this)
+      currentTarget.find("ul").toggle()
+    });
+
+  </script>
 </body>
 </html>

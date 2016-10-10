@@ -1,6 +1,7 @@
 import requests
 from app import celery, models, constants, helpers
 import config
+from celery import group
 
 @celery.task
 def get_story(sid, rank):
@@ -13,7 +14,6 @@ def get_story(sid, rank):
 
   pt_uid = helpers.construct_uid(sid, constants.PORTUGUESE)
   fr_uid = helpers.construct_uid(sid, constants.FRENCH)
-
   request_translations.delay(s['title'], [pt_uid, fr_uid])
 
   story = models.Story(
@@ -22,13 +22,39 @@ def get_story(sid, rank):
     by=s['by'],
     title=s['title'],
     pt_uid=pt_uid,
-    fr_uid=fr_uid
+    fr_uid=fr_uid,
+    descendents=s['descendants']
   )
 
   # delete stories if they exist in this position
   models.Story.objects(rank=rank).delete()
-
   story.save()
+
+  # get comments
+  print "#"*100
+  for cid in s['kids']:
+    print "CID: ", cid
+    get_hn_comment.delay(sid, cid)
+  print "-"*100
+  
+
+@celery.task
+def get_hn_comment(sid, cid):
+  url = helpers.make_hn_api_url(constants.HN_ITEM_ENDPOINT, item_id=str(cid))
+  r = requests.get(url)
+  #todo: check for errors
+  item = r.json()
+
+  if 'text' in item and 'by' in item:
+    # save comment in DB
+    comment = models.Comment(
+      cid=cid,
+      by=item['by'] if 'by' in item else "",
+      text=item['text'],
+      parent=sid
+    )
+
+    models.Story.objects(sid=sid).update_one(push__comments=comment)
 
 @celery.task
 def swap_stories_by_rank(s, new_rank):
