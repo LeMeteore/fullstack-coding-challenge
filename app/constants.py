@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding:utf-8 -*-
+
 # Hacker News
 HN_URL = "https://hacker-news.firebaseio.com/v0/"
 HN_ITEM_ENDPOINT = "item/"

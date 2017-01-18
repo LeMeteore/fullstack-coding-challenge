@@ -1,10 +1,15 @@
+#!/usr/bin/env python
+# -*- coding:utf-8 -*-
+
+""" Application configuration"""
+
 from datetime import timedelta
 from app import tasks
 
 MONGODB_SETTINGS = {
-  'db': 'multilingual_hacker_news',
-  'username': '',
-  'password': ''
+    'db': 'multilingual_hacker_news',
+    'username': '',
+    'password': ''
 }
 
 CELERY_BROKER_URL = 'redis://localhost:6379/0'
@@ -17,9 +22,10 @@ CELERYBEAT_SCHEDULE = {
     },
 }
 
-UNBABEL_USERNAME = "pixels.camp.508"
-UNBABEL_KEY = "efce0e40d04fadb0dd8291855dc18007c674b105"
-UNBABEL_EMAIl = "pixels.camp.508@unbabel.com"
+UNBABEL_USERNAME = "ndkpatt"
+UNBABEL_KEY = "3ab3f760fbad437fbb582b98a3c3a1bc58d43769"
+UNBABEL_EMAIL = "ndkpatt@gmail.com"
+
 
 
 
