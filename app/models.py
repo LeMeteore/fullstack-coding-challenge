@@ -9,7 +9,7 @@ class Comment(db.EmbeddedDocument):
     text = db.StringField(max_length=10000, required=True)
     parent = db.IntField(required=True)
     #todo missing the second level comments (kids)
-
+    kids = db.ListField(db.IntField(required=True))
     meta = {
         'indexes': ['cid']
         }
@@ -26,6 +26,7 @@ class Story(db.Document):
     rank = db.IntField(required=True)
 
     comments = db.ListField(db.EmbeddedDocumentField(Comment))
+    kids = db.ListField(db.IntField(required=True))
 
     meta = {
         'indexes': ['sid', 'rank'],
