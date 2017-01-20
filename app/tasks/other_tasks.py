@@ -26,17 +26,17 @@ def get_story(sid, rank):
         title=s['title'],
         pt_uid=pt_uid,
         fr_uid=fr_uid,
+        # this typo should be fixed, a, not e
         descendents=s['descendants']
     )
 
     # delete stories if they exist in this position
     models.Story.objects(rank=rank).delete()
-    story.insert_one()
+    story.save()
 
     # get comments
-    print( "#"*100)
     for cid in s['kids']:
-        print( "CID: ", cid)
+        #print( "CID: ", cid)
         get_hn_comment.delay(sid, cid)
     print( "-"*100)
 
@@ -61,6 +61,7 @@ def get_hn_comment(sid, cid):
 
 @celery.task
 def swap_stories_by_rank(s, new_rank):
+    s = models.Story().from_json(s)
     previous_rank = s.rank
 
     if previous_rank == new_rank:
@@ -72,9 +73,9 @@ def swap_stories_by_rank(s, new_rank):
 
     if misplaced_story:
         misplaced_story.rank = previous_rank
-        misplaced_story.insert_one()
+        misplaced_story.save()
 
-    s.insert_one()
+    s.save()
 
 @celery.task
 def request_translations(text, uids):
@@ -109,7 +110,7 @@ def update_story_translation(uid, text):
     elif language == constants.FRENCH:
         story.fr_title = text
 
-    story.insert_one()
+    story.save()
 
 @celery.task
 def retry_translation(uid, text):
