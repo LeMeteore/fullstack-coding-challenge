@@ -25,7 +25,6 @@ def get_top_stories_ids(n=10):
 def get_hn_story(sid):
     ''' sid: str '''
     url = make_hn_api_url(constants.HN_ITEM_ENDPOINT, item_id=sid)
-    print(url)
     try:
         r = requests.get(url)
     # except Exception:
@@ -45,7 +44,7 @@ def get_unbabel_api_headers():
 
 def construct_uid(sid, language):
     to_epoch = int(time.time())
-    return '{language}:{sid}:{to_epoch}'
+    return f'{language}:{sid}:{to_epoch}'
 
 def get_sid_from_uid(uid):
     return int(uid.split(':')[1])
