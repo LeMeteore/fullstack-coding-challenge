@@ -43,7 +43,7 @@ Build a dashboard to check the status of all translations.
 * Hackernews API: https://github.com/HackerNews/API
 
 #### What I've done:
-* Clone this repository containing already a good amount of what should be done.
+* Clone the DiMesq's repository, containing already a good amount of what should be done.
 * Ask of credential to use the unbabel API
 * Create a virtualenv: python3 -m venv ~/envs/fsc
 * Install everything necessary, and create a requirements.txt: pip freeze > requirements.txt
