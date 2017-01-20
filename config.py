@@ -22,10 +22,8 @@ CELERYBEAT_SCHEDULE = {
     },
 }
 
-UNBABEL_USERNAME = "ndkpatt"
-UNBABEL_KEY = "3ab3f760fbad437fbb582b98a3c3a1bc58d43769"
 UNBABEL_EMAIL = "ndkpatt@gmail.com"
-
-
-
-
+# UNBABEL_USERNAME = "ndkpatt"
+# UNBABEL_KEY = "3ab3f760fbad437fbb582b98a3c3a1bc58d43769"
+UNBABEL_USERNAME = "backendchallenge"
+UNBABEL_KEY = "711b8090e84dcb4981e6381b59757ac5c75ebb26"
