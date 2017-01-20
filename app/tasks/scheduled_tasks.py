@@ -7,6 +7,7 @@ from app import celery, models, helpers
 from app.tasks import other_tasks
 from celery import group
 
+
 @celery.task
 def update_stories():
     """ Function to update stories """
@@ -17,7 +18,7 @@ def update_stories():
 
         if story:
             #store the story in new rank
-            other_tasks.swap_stories_by_rank.delay(story, rank)
+            other_tasks.swap_stories_by_rank.delay(story.to_json(), rank)
 
         else:
             # get story and translate it
